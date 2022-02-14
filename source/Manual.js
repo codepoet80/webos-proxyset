@@ -110,8 +110,10 @@ enyo.kind({
         console.log("got success from setPreferences");
         this.$.proxyServer.setValue(this.newProxyServer);
         this.$.proxyPort.setValue(this.newProxyPort);
-        this.$.proxyUserName.setValue(this.newProxyUserName);
-        this.$.proxyPassword.setValue(this.newProxyPassword);
+        if ((this.newProxyUserName != undefined) && (this.newProxyUserName.length > 0))
+            this.$.proxyUserName.setValue(this.newProxyUserName);
+        if ((this.newProxyPassword != undefined) && (this.newProxyPassword.length > 0))
+            this.$.proxyPassword.setValue(this.newProxyPassword);
     },
     setPreferencesFailure: function(inSender, inResponse) {
         //	    enyo.log("got failure from setPreferences");
@@ -193,8 +195,8 @@ enyo.kind({
         //	    enyo.log("getResult success, results=" + enyo.json.stringify(inResponse));
         var newDefaultProxyServerValue = this.newProxyServer;
         var newDefaultProxyPortValue = this.newProxyPort;
-        var newDefaultProxyUserNameValue = this.newProxyUserName;
-        var newDefaultProxyPasswordValue = this.newProxyPassword;
+        var newDefaultProxyUserNameValue = this.newProxyUserName || "";
+        var newDefaultProxyPasswordValue = this.newProxyPassword || "";
 
         this.$.setPreferencesCall.call({
             "defaultProxyServer": newDefaultProxyServerValue,
