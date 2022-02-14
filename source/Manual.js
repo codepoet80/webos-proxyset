@@ -98,8 +98,11 @@ enyo.kind({
         else this.$.proxyServer.setValue(inResponse.defaultProxyServer);
         if (inResponse.defaultProxyPort == undefined) this.$.proxyPort.setValue("3128");
         else this.$.proxyPort.setValue(inResponse.defaultProxyPort);
-        if (inResponse.defaultProxyUserName == undefined) this.$.proxyUserName.setValue(enyo.getCookie("username"));
-        else this.$.proxyUserName.setValue(inResponse.defaultProxyUserName || enyo.getCookie("username"));
+        if (inResponse.defaultProxyUserName == undefined) {
+            if (enyo.getCookie("username") && enyo.getCookie("username") != undefined)
+                this.$.proxyUserName.setValue(enyo.getCookie("username"));
+        }
+        else this.$.proxyUserName.setValue(inResponse.defaultProxyUserName);
         if (inResponse.defaultProxyPassword == undefined) this.$.proxyPassword.setValue("");
         else this.$.proxyPassword.setValue(inResponse.defaultProxyPassword);
     },
@@ -154,6 +157,9 @@ enyo.kind({
         var password = this.$.proxyPassword.getValue();
         var authserver = "";
 
+        if (username != undefined)
+            enyo.setCookie("username", username, { "Max-Age": 365 });
+
         this.newProxyServer = "";
         this.newProxyPort = undefined;
         this.newProxyUserName = "";
@@ -178,9 +184,6 @@ enyo.kind({
             this.newProxyServer = server;
             this.newProxyPort = port;
 
-            if (username)
-                enyo.setCookie("username", username, { "Max-Age": 365 });
-
             //			enyo.log("newProxyServer: " + this.newProxyServer);
             //			enyo.log("newProxyPort: " + this.newProxyPort);
 
@@ -195,8 +198,8 @@ enyo.kind({
         //	    enyo.log("getResult success, results=" + enyo.json.stringify(inResponse));
         var newDefaultProxyServerValue = this.newProxyServer;
         var newDefaultProxyPortValue = this.newProxyPort;
-        var newDefaultProxyUserNameValue = this.newProxyUserName || "";
-        var newDefaultProxyPasswordValue = this.newProxyPassword || "";
+        var newDefaultProxyUserNameValue = this.newProxyUserName;
+        var newDefaultProxyPasswordValue = this.newProxyPassword;
 
         this.$.setPreferencesCall.call({
             "defaultProxyServer": newDefaultProxyServerValue,
