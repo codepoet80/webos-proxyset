@@ -1,0 +1,9 @@
+enyo.depends(
+    "source/appMenu.js",
+    "source/ProxySet.js",
+    "source/Manual.js",
+    "source/Certificate.js",
+    "source/Off.js",
+    "helpers/Updater.js",
+    "css/proxyset.css"
+);
