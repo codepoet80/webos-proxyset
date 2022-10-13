@@ -58,7 +58,7 @@ enyo.kind({
         this.$.alert.open();
 
         this.$.setPreferencesCall.call({
-            "defaultProxyServer": "proxy.webosarchive.com",
+            "defaultProxyServer": "proxy.webosarchive.org",
             "defaultProxyPort": "3128",
             "defaultProxyUserName": "",
             "defaultProxyPassword": "",

@@ -26,7 +26,7 @@ enyo.kind({
                         pack: "center",
                         align: "start",
                         components: [
-                            { name: "certDownloadPath", kind: "Input", value: "http://www.webosarchive.com/proxy/wOSAServiceCert.der", pack: "center", align: "start", lazy: false },
+                            { name: "certDownloadPath", kind: "Input", value: "http://www.webosarchive.org/proxy/wOSAServiceCert.der", pack: "center", align: "start", lazy: false },
                         ]
                     },
                     {
@@ -96,7 +96,7 @@ enyo.kind({
     downloadFile: function(inSender, inResponse) {
         enyo.log("** downloading: " + this.$.certDownloadPath.value);
         this.$.fileDownload.call({
-            //target: "http://www.webosarchive.com/proxy/wOSAServiceCert.der",
+            //target: "http://www.webosarchive.org/proxy/wOSAServiceCert.der",
             target: this.$.certDownloadPath.value,
             mime: "application/x-x509-ca-cert",
             targetDir: "/media/internal/",

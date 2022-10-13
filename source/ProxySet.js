@@ -164,7 +164,7 @@ enyo.kind({
                 break;
             case 'Reset to Defaults':
                 this.$.setPreferencesCall.call({
-                    "defaultProxyServer": "proxy.webosarchive.com",
+                    "defaultProxyServer": "proxy.webosarchive.org",
                     "defaultProxyPort": "3128",
                     "defaultProxyUserName": "",
                     "defaultProxyPassword": ""

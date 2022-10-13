@@ -53,7 +53,7 @@ enyo.kind({
                 pack: "center",
                 align: "start",
                 components: [
-                    { name: "proxyServer", kind: "Input", value: "proxy.webosarchive.com", pack: "center", align: "start", lazy: false },
+                    { name: "proxyServer", kind: "Input", value: "proxy.webosarchive.org", pack: "center", align: "start", lazy: false },
                 ]
             },
             {
@@ -94,7 +94,7 @@ enyo.kind({
         this.$.alert.close()
     },
     getPreferencesSuccess: function(inSender, inResponse) {
-        if (inResponse.defaultProxyServer == undefined) this.$.proxyServer.setValue("proxy.webosarchive.com");
+        if (inResponse.defaultProxyServer == undefined) this.$.proxyServer.setValue("proxy.webosarchive.org");
         else this.$.proxyServer.setValue(inResponse.defaultProxyServer);
         if (inResponse.defaultProxyPort == undefined) this.$.proxyPort.setValue("3128");
         else this.$.proxyPort.setValue(inResponse.defaultProxyPort);
