@@ -1,7 +1,0 @@
-[
-    { "source": "source/appMenu.js" },
-    { "source": "source/Manual.js" },
-    { "source": "source/Certificate.js" },
-    { "source": "source/Off.js" },
-    { "source": "source/ProxySet.js" }
-]
