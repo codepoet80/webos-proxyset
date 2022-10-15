@@ -1,19 +1,40 @@
 /* TODO: put your application-specific CSS here */
 .header-icon {
-	width: 48px;
+    width: 40px;
+	height: 48px;
+}
+.bigIcon {
+	width: 54px !important;
+    margin-left: -55px !important;
 	height: 48px;
 	background: url(../images/header-icon-proxy.png);
+}
+.smallIcon {
+	width: 40px;
+	height: 48px;
+	background: url(../images/header-icon-proxy-s.png);
+}
+
+.headerTitle {
+    padding-left:10px;
+}
+.headerTitleTouchpad {
+    padding-left: 17px !important;
 }
 
 .box-center {
     max-width:500px;
-    margin:23px auto 0;
+    margin:0px auto 0;
 }
 
 .footnote-text {
 	font-size:16px;
 	color:#666;
 	margin: -2px 5px 16px 10px;
+}
+
+.touchpad-margin {
+    margin-top: 23px;
 }
 
 .wifi-header-shadow,

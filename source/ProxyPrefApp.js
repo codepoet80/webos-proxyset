@@ -16,22 +16,24 @@ enyo.kind({
 		{kind: "PalmService", name: "launchAppRequest", service: "palm://com.palm.applicationManager/", method: "open", onSuccess: "", onFailure: "certificateLaunchFailure" },
 		{kind: "ApplicationEvents", onWindowActivated: "handleActivate", onWindowDeactivated: "handleDeactivate", onApplicationRelaunch: "handleLaunchParam"},
 
-		{kind: "Toolbar", pack: "center", className: "enyo-toolbar-light wifi-header", components: [
-			{kind: "Spacer", flex: 1},
-			{kind: "HFlexBox", pack: "center", align: "center", components: [
+		{kind: "Toolbar", pack: "center", name:"toolbarTop", className: "enyo-toolbar-light wifi-header", components: [
+			{kind: "Spacer", name:"spacerTP", flex: 1, showing: true },
+			{kind: "HFlexBox", pack: "center", name:"headerIcon", align: "center", components: [
 				{className: "header-icon"},
-				{content: $L("Proxy"), name: "headerTitle", style: "padding-left:10px;"}
+				{content: $L("Proxy"), name: "headerTitle", class: "headerTitle"}
 			]},
+			{kind: "Spacer", name:"spacerPhone", flex: 1, showing: false },
 			{flex: 1, components: [{kind: "ToggleButton", flex: 1, name: "proxyToggleButton", style: "float: right; padding: 0px;", showing:false, onChange: "handleProxyToggleChange"}]}
 		]},
-		
 		{className:"wifi-header-shadow"},
+		{className:"touchpad-margin", name: "tpmargin"},
+		
 		{kind: "Scroller", flex: 1, className: "box-center", components: [
 			{kind: "RowGroup", caption: "Encryption", components: [
 				{kind: "Item", align: "center", tapHighlight: false, layoutKind: "HFlexLayout", components: [
 						{flex:1, content: $L("Install Certificate")},
-						{kind: "Button", name:'btnInstallCert', onclick:"downloadCert", components: [
-							{kind: "enyo.Image", src: "images/InstallCert.png", alt: "Install"}
+						{kind: "Button", name:'btnInstallCert', onclick:"downloadCert", style:"margin: -5px", components: [
+							{kind: "enyo.Image", src: "images/InstallCert.png", alt: "Install", style:"margin: -5px"}
 						]}
 				]}
 			]},
@@ -114,6 +116,16 @@ enyo.kind({
 		this.proxyOn = Prefs.getCookie("proxyState", this.proxyOn);
 		this.setToggleProxy();
 		this.applySettings();
+
+		if(!this.isTouchpad()) {
+			this.$.spacerTP.hide();
+			this.$.spacerPhone.show();
+			this.$.headerIcon.addClass("smallIcon");
+			this.$.tpmargin.hide();
+		} else {
+			this.$.headerIcon.addClass("bigIcon");
+			this.$.headerTitle.addClass("headerTitleTouchpad")
+		}
 	},
 
 	handleActivate: function () {
@@ -143,13 +155,11 @@ enyo.kind({
 	},
 	toggleTextFields: function() {
 		if (this.$.proxyToggleButton.getState()) {
-			enyo.log("disable text fields!");
 			this.$.proxyServer.setDisabled(true);
 			this.$.proxyPort.setDisabled(true);
 			this.$.proxyUserName.setDisabled(true);
 			this.$.proxyPassword.setDisabled(true);
 		} else {
-			enyo.log("enable text fields!");
 			this.$.proxyServer.setDisabled(false);
 			this.$.proxyPort.setDisabled(false);
 			this.$.proxyUserName.setDisabled(false);
@@ -316,5 +326,26 @@ enyo.kind({
     headerCheckFailure: function(inSender, inResponse, inRequest) {
         enyo.error("Got failure from header check, we might not be online: " + inResponse);
     },
+
+	isTouchpad: (function() {
+		// TODO: we should us the cleaner Palm-approach here.
+		var minSize = Math.min(window.innerWidth, window.innerHeight);
+		var touchpad = true;
+		if (minSize < 600) {
+			// we're on a touchpad (even the Pre3 will be 480 here);
+			iconLocationPlus = "";
+			touchpad = false;
+		}
+	
+		var device;
+		if (window.PalmSystem) {
+			device = JSON.parse(PalmSystem.deviceInfo);
+		} else {
+			device = {
+				modelNameAscii: "webOS device"
+			}
+		}
+		return touchpad;
+	})
 
 });
